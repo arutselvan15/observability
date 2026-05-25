@@ -62,4 +62,21 @@ Stop and remove the containers. Use `-v` to remove the volumes if looking to era
 $ podman compose down -v
 ```
 
+## node_exporter metrics
+
+`node_exporter` is included in [compose.yaml](compose.yaml). Start the full stack:
+
+    podman compose up -d
+
+Prometheus scrapes it at `node_exporter:9100` on the compose network (see [prometheus/prometheus.yml](prometheus/prometheus.yml)).
+
+- Exporter UI: http://localhost:9100/
+- Metrics: http://localhost:9100/metrics
+- Target status: http://localhost:9090/targets
+
+**macOS note:** Docker Desktop runs containers in a Linux VM. Metrics from the containerized node_exporter describe that VM (CPU, memory, disk), not your Mac host directly. That is fine for learning and local demos. For true Mac host metrics, run the [darwin node_exporter binary](https://prometheus.io/download/#node_exporter) on the host and scrape `host.docker.internal:9100` instead.
+
+After changing Prometheus config:
+
+    podman compose restart prometheus
 

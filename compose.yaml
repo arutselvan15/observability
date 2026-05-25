@@ -10,6 +10,21 @@ services:
     volumes:
       - ./prometheus:/etc/prometheus
       - prom_data:/prometheus
+  node_exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    ports:
+      - 9100:9100
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
   grafana:
     image: grafana/grafana
     container_name: grafana
