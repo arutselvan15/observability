@@ -13,6 +13,7 @@ services:
   node_exporter:
     image: prom/node-exporter
     container_name: node_exporter
+    privileged: true
     ports:
       - 9100:9100
     restart: unless-stopped
