@@ -164,6 +164,43 @@ prometheus_http_requests_total{handler="/api/v1/query"}  offset 30s
 
 ![offset2.png](offset2.png)
 
+### Functions
+
+- absent
+- absent_over_time
+- abs - absolute value
+- ceil - convert to nearest larger integer
+- floor - convert to nearest smaller integer
+- clamp - filter between range, clamp(300, 500) - show between 300 and 500
+- clamp_min - show value min from value, clamp_min(300) - show 300 and above
+- clamp_max - show value from 0 to value, clamp_max(300), show 0 to 300
+- day_of_month - 
+- day_of_week - 
+- delta - 
+- idelta - 
+- log2
+- log10
+- ln
+- sort
+- sort_desc
+- time
+- timestamp
+- avg_over_time
+- sum_over_time
+- min_over_time
+- max_over_time
+- count_over_time
+
+#### sort
+
+sort(clamp(node_cpu_seconds_total, 300, 15000))
+
+![sort.png](sort.png)
+
+
+
+
+
 
 
 
