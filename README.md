@@ -1,4 +1,5 @@
 ## Compose sample
+
 ### Prometheus & Grafana
 
 Project structure:
@@ -11,6 +12,8 @@ Project structure:
 │   └── prometheus.yml
 └── README.md
 ```
+
+Official docker images: https://hub.docker.com/u/prom 
 
 [_compose.yaml_](compose.yaml)
 ```
