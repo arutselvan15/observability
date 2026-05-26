@@ -10,9 +10,9 @@ route:
 
   # custom receivers
   routes:
-    - receiver: email-gmail
-      matchers:
-        - severity="warning"
+#    - receiver: email-gmail
+#      matchers:
+#        - severity="warning"
     - receiver: email-gmail
       matchers:
         - severity="high"
@@ -29,3 +29,9 @@ receivers:
         auth_password: "kaev ijef csgh lice"
 #        require_tls: true
 
+inhibit_rules:
+  - source_match:
+      team: "core-prometheus"
+    target_match:
+      team: "node-exporter"
+    equal: ["severity"]       # when severity is same in both teams

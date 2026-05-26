@@ -9,10 +9,20 @@ groups:
         annotations:
           summary: Prometheus target down (instance {{ $labels.instance }})
           description: "Prometheus scrape target is unreachable or reporting down.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: PrometheusDown
+        expr: prometheus_build_info == 0
+        for: 30s
+        labels:
+          team: core-prometheus
+          severity: warning
+        annotations:
+          summary: Prometheus is down
+          description: "Prometheus is unreachable or reporting down.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
       - alert: NodeExporterJobMissing
         expr: up{job="node_exporter"} == 0
         for: 2m
         labels:
+          team: node-exporter
           severity: warning
         annotations:
           summary: Node Exporter target down (instance {{ $labels.instance }})
