@@ -2,11 +2,30 @@ global:
   resolve_timeout: 5m
 
 route:
-  group_by: ['alertname']
-  group_wait: 10s
-  group_interval: 10s
+  receiver: default     # default receiver
+  group_wait: 30s
+  group_interval: 5m
   repeat_interval: 1h
-  receiver: default
+  group_by: ['alertname']
 
+  # custom receivers
+  routes:
+    - receiver: email-gmail
+      matchers:
+        - severity="warning"
+    - receiver: email-gmail
+      matchers:
+        - severity="high"
+
+# A list of notification receivers.
 receivers:
   - name: default
+  - name: email-gmail
+    email_configs:
+      - smarthost: 'smtp.gmail.com:587'
+        to: "arut.selvan15@gmail.com"
+        from: "arut.selvan15@gmail.com"
+        auth_username: "arut.selvan15@gmail.com"
+        auth_password: "kaev ijef csgh lice"
+#        require_tls: true
+
