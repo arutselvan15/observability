@@ -30,22 +30,34 @@ Scope setup alert for prometheus target (self).
 
 3. Add alert rules
 
-   - alert: NodeExporterJobMissing
-     expr: up{job="node_exporter"} == 0
-     for: 2m
-     labels:
-       severity: warning
-     annotations:
-       summary: Node Exporter target down (instance {{ $labels.instance }})
-       description: "Node Exporter scrape target is unreachable or reporting down.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+    ```
+        - alert: NodeExporterJobMissing
+         expr: up{job="node_exporter"} == 0
+         for: 2m
+         labels:
+           severity: warning
+         annotations:
+           summary: Node Exporter target down (instance {{ $labels.instance }})
+           description: "Node Exporter scrape target is unreachable or reporting down.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+    ```
+
+    - "for" defined the threshold. 
+    - labels provide access to the metrics labels (refer target labels)
+      - instance="node_exporter:9100"
+      - job="node_exporter"
+    - annotations provide templates for messages, values from labels can be used $labels.instance.
+      - $value is the result for query "up{job="node_exporter"} == 0"
+      - $labels provide all label values.
 
    [jobs_missing.yml](rules/jobs_missing.yml)
 
 4. Add alerts in prometheus
 
+   ```
    scrape_configs:
    rule_files:
      - "alert/rules/jobs_missing.yml"
+   ```
 
    [prometheus.yml](../prometheus.yml)
 
@@ -54,6 +66,16 @@ Scope setup alert for prometheus target (self).
 6. Validate in UI
 
    ![job-miss.png](job-miss.png)
+
+7. Alert failure view
+
+    When rule expression met the alert goes to pending until it reach the threshold.
+
+    ![pending.png](pending.png)
+
+    Once threshold is met, alert is fired.
+
+    ![fire.png](fire.png)
 
 ## Examples in internet
 
