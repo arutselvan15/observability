@@ -1,0 +1,19 @@
+groups:
+  - name: Alerts
+    rules:
+      - alert: PrometheusJobMissing
+        expr: up{job="prometheus"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Prometheus target down (instance {{ $labels.instance }})
+          description: "Prometheus scrape target is unreachable or reporting down.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: NodeExporterJobMissing
+        expr: up{job="node_exporter"} == 0
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: Node Exporter target down (instance {{ $labels.instance }})
+          description: "Node Exporter scrape target is unreachable or reporting down.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
